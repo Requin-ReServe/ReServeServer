@@ -13,4 +13,5 @@ def create_app(*config_cls):
 
 
 def Route(app : Flask):
-    pass
+    from views.api.auth import register
+    app.register_blueprint(register.api.blueprint)
