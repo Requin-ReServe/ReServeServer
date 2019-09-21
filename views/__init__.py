@@ -1,4 +1,7 @@
 from flask import Flask
+from mongoengine import connect
+
+from const import _MONGO_SETTING
 
 
 def create_app(*config_cls):
@@ -8,10 +11,12 @@ def create_app(*config_cls):
         app_.config.from_object(config)
 
     Route(app_)
+    connect(**_MONGO_SETTING)
 
     return app_
 
 
 def Route(app : Flask):
-    from views.api.auth import register
+    from views.api.auth import test_api, register
+    app.register_blueprint(test_api.api.blueprint)
     app.register_blueprint(register.api.blueprint)

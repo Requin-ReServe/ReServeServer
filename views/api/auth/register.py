@@ -1,25 +1,36 @@
 from flask import Blueprint, request
 from flask_restful import Api, Resource
 
+from models.user.user_model import User_Model
+
 
 api = Api(Blueprint(__name__,__name__))
+api.prefix = '/auth'
 
-@api.resource('/')
+
+@api.resource('/register')
 class Register(Resource):
-    def get(self):
-        return {
-            'METHOD':'GET'
-        }, 201
-
     def post(self):
-        try:
-            data = request.json['data']
-            print(data)
-        except:
-            return {
-                'METHOD': 'NULL'
-            }, 400
+        register_id = request.json['id']
+        register_name = request.json['name']
+        register_pw = request.json['pw']
+        user_type = request.json['type']
+        basic_point = request.json['point']
 
-        return {
-            'METHOD':data+"바보"
-        }, 201
+
+        finder = User_Model.objects(id=register_id).first()
+
+
+        if finder is not None:
+            return '', 409
+
+
+        User_Model(
+            id = register_id,
+            pw = register_pw,
+            name = register_name,
+            point = basic_point,
+            user_type = user_type
+        ).save()
+
+        return '', 201
