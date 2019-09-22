@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from flask_restful import Api, Resource
 
 from models.user.user_model import User_Model
@@ -18,11 +18,11 @@ class Login(Resource):
 
 
         if finder is None:
-            return '', 405
+            return abort(409)
 
 
         if finder['pw'] == login_pw:
             return '', 200
 
 
-        return '', 405
+        return abort(409)

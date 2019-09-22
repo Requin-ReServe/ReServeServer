@@ -1,6 +1,6 @@
 import random
 
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from flask_restful import Api, Resource
 
 from models.service.market import Market_Model
@@ -22,7 +22,7 @@ class RegisterMarket(Resource):
 
 
         if finder is not None:
-            return '', 409
+            return abort(409)
 
 
         while True:

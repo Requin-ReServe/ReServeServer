@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, abort
 from flask_restful import Api, Resource
 
 from models.user.user_model import User_Model
@@ -22,7 +22,7 @@ class Register(Resource):
 
 
         if finder is not None:
-            return '', 409
+            abort(409)
 
 
         User_Model(
