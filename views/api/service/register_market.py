@@ -16,6 +16,7 @@ class RegisterMarket(Resource):
         register_name = request.json['name']
         register_loc = request.json['location']
         register_num = request.json['phone']
+        owner_num = request.json['owner']
 
 
         finder = Market_Model.objects(location=register_loc).first()
@@ -32,6 +33,7 @@ class RegisterMarket(Resource):
 
 
         Market_Model(
+            owner_name = owner_num,
             name = register_name,
             location = register_loc,
             telephone_num = register_num,
