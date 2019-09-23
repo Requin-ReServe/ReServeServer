@@ -4,6 +4,8 @@ from mongoengine import Document
 
 class Market_Model(Document):
 
+    owner_name = StringField()
+
     name = StringField()
 
     location = StringField(primary_key=True)
