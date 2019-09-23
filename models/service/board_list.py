@@ -8,8 +8,8 @@ class BoardModel(EmbeddedDocument):
     price = IntField()
 
 class Boardlist_Model(Document):
-    board_id = IntField()
+    board_id = IntField(primary_key=True)
 
     auth_id = IntField()
 
-    menu = EmbeddedDocument(BoardModel)
+    menu = EmbeddedDocumentField(BoardModel)

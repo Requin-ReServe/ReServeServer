@@ -22,5 +22,6 @@ def Route(app : Flask):
     app.register_blueprint(register.api.blueprint)
     app.register_blueprint(login.api.blueprint)
 
-    from views.api.service import register_market
+    from views.api.service import register_market, board_list
     app.register_blueprint(register_market.api.blueprint)
+    app.register_blueprint(board_list.api.blueprint)
