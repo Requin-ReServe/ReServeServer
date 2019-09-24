@@ -16,17 +16,26 @@ class boardList(Resource):
 
         board = Boardlist_Model.objects(board_id = board_id).first()
 
+        board_list = {}
+        a = 0
+
+        for menu in board['menu']:
+            board_list[a] = {
+                menu['name'] : menu['price']
+            }
+            a += 1
+
         return {
-             board['menu']
+            "menu":board_list
         }, 200
 
 
     def post(self):
-        b_id = request.json['board_id']
+        board_id = request.json['board_id']
         auth_id = request.json['auth_id']
         menu = request.json['menu']
 
-        finder = Boardlist_Model.objects(board_id=b_id).first()
+        finder = Boardlist_Model.objects(board_id=board_id).first()
 
         if finder is None:
             while True:
@@ -41,9 +50,28 @@ class boardList(Resource):
                 menu = menu
             ).save()
 
+            # Save Request Example
+            # {
+            #     "board_id": "57192",
+            #     "auth_id": "12345",
+            #     "menu": [{
+            #         "name": "mgiskingasdf",
+            #         "price": "50042"
+            #     }]
+            # }
+
         else:
-            finder().update(
-                menu = menu
-            )
+            finder.menu.append(menu)
+            finder.save()
+
+            # Update Request Example
+            # {
+            #     "board_id": "57192",
+            #     "auth_id": "12345",
+            #     "menu": {
+            #         "name": "mgiskingasdf",
+            #         "price": "50042"
+            #     }
+            # }
 
         return '', 201
