@@ -11,7 +11,7 @@ class BoardModel(EmbeddedDocument):
 class Boardlist_Model(Document):
     board_id = IntField(primary_key=True)
 
-    auth_id = IntField()
+    market_id = IntField()
 
     menu = ListField(
         list = EmbeddedDocumentField(BoardModel)

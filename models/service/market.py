@@ -4,7 +4,7 @@ from mongoengine import Document
 
 class Market_Model(Document):
 
-    owner_name = StringField()
+    owner_id = StringField()
 
     name = StringField()
 
@@ -12,7 +12,7 @@ class Market_Model(Document):
 
     telephone_num = StringField()
 
-    authid = IntField()
+    market_id = IntField()
 
     meta = {
         'indexes': [
