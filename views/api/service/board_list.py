@@ -2,6 +2,7 @@ import random
 
 from flask import Blueprint, request
 from flask_restful import Api, Resource
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 from models.service.board_list import Boardlist_Model
 
@@ -29,10 +30,10 @@ class boardList(Resource):
             "menu":board_list
         }, 200
 
-
+    @jwt_required
     def post(self):
         board_id = request.json['board_id']
-        auth_id = request.json['auth_id']
+        market_id = request.json['market_id']
         menu = request.json['menu']
 
         finder = Boardlist_Model.objects(board_id=board_id).first()
@@ -46,7 +47,7 @@ class boardList(Resource):
 
             Boardlist_Model(
                 board_id = create_board_id,
-                auth_id = auth_id,
+                market_id = market_id,
                 menu = menu
             ).save()
 
