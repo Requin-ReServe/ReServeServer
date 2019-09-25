@@ -19,11 +19,11 @@ def create_app(*config_cls):
 
 
 def Route(app : Flask):
-    from views.api.auth import test_api, register, login, user_impormation
+    from views.api.auth import test_api, register, login, user_inpormation
     app.register_blueprint(test_api.api.blueprint)
     app.register_blueprint(register.api.blueprint)
     app.register_blueprint(login.api.blueprint)
-    app.register_blueprint(user_impormation.api.blueprint)
+    app.register_blueprint(user_inpormation.api.blueprint)
 
     from views.api.service import register_market, board_list, order_list, market_list
     app.register_blueprint(register_market.api.blueprint)

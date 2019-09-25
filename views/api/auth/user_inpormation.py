@@ -8,8 +8,8 @@ api = Api(Blueprint(__name__,__name__))
 api.prefix = '/auth'
 
 
-@api.resource('/user-impormation')
-class Login(Resource):
+@api.resource('/user-inpormation')
+class UserInformation(Resource):
     def get(self):
         user = User_Model.objects(id ='migskiang').first()
 
