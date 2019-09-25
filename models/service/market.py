@@ -13,3 +13,16 @@ class Market_Model(Document):
     telephone_num = StringField()
 
     authid = IntField()
+
+    meta = {
+        'indexes': [
+            {
+                'fields': [
+                    '$name', "$location"
+                ],
+                'weights': {
+                    'name': 8, 'location': 10
+                }
+            }
+    ]
+    }

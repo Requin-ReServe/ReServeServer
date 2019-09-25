@@ -1,5 +1,6 @@
 from flask import Blueprint, request, abort
 from flask_restful import Api, Resource
+from flask_jwt_extended import create_access_token
 
 from models.user.user_model import User_Model
 
@@ -22,7 +23,9 @@ class Login(Resource):
 
 
         if finder['pw'] == login_pw:
-            return '', 200
+            return {
+                "access_token":create_access_token(identity=login_id)
+                   }, 200
 
 
         return abort(409)
