@@ -24,7 +24,6 @@ class Login(Resource):
     def post(self):
         change_name = request.json['name']
         change_pw = request.json['pw']
-
         finder = User_Model.objects(id= 'migskiang').first()
 
         finder.update(
@@ -34,3 +33,4 @@ class Login(Resource):
 
 
         return '', 201
+
