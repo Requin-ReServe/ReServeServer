@@ -21,7 +21,6 @@ class RegisterMarket(Resource):
 
         owner_id = get_jwt_identity()
 
-
         finder = Market_Model.objects(location=register_loc).first()
 
 
@@ -36,7 +35,7 @@ class RegisterMarket(Resource):
 
 
         Market_Model(
-            owner_name = owner_id,
+            owner_id = owner_id,
             name = register_name,
             location = register_loc,
             telephone_num = register_num,
