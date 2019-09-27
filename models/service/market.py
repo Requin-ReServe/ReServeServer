@@ -15,14 +15,14 @@ class Market_Model(Document):
     market_id = IntField()
 
     meta = {
-        'indexes': [
-            {
-                'fields': [
-                    '$name', "$location"
-                ],
-                'weights': {
-                    'name': 8, 'location': 10
+            'indexes': [
+                {
+                    'fields': [
+                        '$name', '$location'
+                    ],
+                    'weights': {
+                        'name': 6, 'location': 10
+                    }
                 }
-            }
-    ]
+        ]
     }
