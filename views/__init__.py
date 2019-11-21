@@ -25,7 +25,9 @@ def Route(app : Flask):
     app.register_blueprint(user_information.api.blueprint)
     app.register_blueprint(charge_point.api.blueprint)
 
-    from views.api.service import register_market, market_list, show_market, my_market, reservation, reservation_detail, owner_show_reservation_list
+    from views.api.service import (
+        register_market, market_list, show_market, my_market, reservation,
+        reservation_detail, owner_show_reservation_list, payment )
     app.register_blueprint(register_market.api.blueprint)
     app.register_blueprint(market_list.api.blueprint)
     app.register_blueprint(show_market.api.blueprint)
@@ -33,3 +35,4 @@ def Route(app : Flask):
     app.register_blueprint(reservation.api.blueprint)
     app.register_blueprint(reservation_detail.api.blueprint)
     app.register_blueprint(owner_show_reservation_list.api.blueprint)
+    app.register_blueprint(payment.api.blueprint)

@@ -5,6 +5,7 @@ from flask_restful import Api, Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from models.service.market import Market_Model
+from models.user.user_model import User_Model
 
 
 api = Api(Blueprint(__name__,__name__))
@@ -17,8 +18,11 @@ class RegisterMarket(Resource):
     def post(self):
         register_name = request.json['name']
         register_loc = request.json['location']
-        register_num = request.json['tell_num']
+        register_num = request.json['tel_num']
         owner_id = get_jwt_identity()
+
+        if User_Model.objects(id = get_jwt_identity()).first()['user_type'] == 0:
+            abort(409)
 
         finder = Market_Model.objects(location=register_loc).first()
 

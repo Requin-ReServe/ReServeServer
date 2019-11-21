@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from models.service.market import Market_Model
 from models.service.order import Orderlist_Model
+from models.user.user_model import User_Model
 
 
 api = Api(Blueprint(__name__,__name__))
@@ -38,7 +39,6 @@ class RegisterMarket(Resource):
         reserve_list = request.json['menu']
         finder = Market_Model.objects(market_id = market_id).first()
 
-        print(reserve_list)
 
         if finder is None:
             return abort(409)
@@ -51,12 +51,34 @@ class RegisterMarket(Resource):
         for Rmenu in reserve_list:
             flag = True
             for menu in finder['menu']:
-                print(menu)
                 if Rmenu['name'] == menu['menu_name']:
                     flag = False
 
             if flag:
                 abort(409)
+
+        Sum = 0
+
+        for s in reserve_list:
+            Sum += s['price']
+
+        user = User_Model.objects(id=get_jwt_identity()).first()
+
+        if user['point'] < Sum:
+            abort(409)
+
+        user.update(
+            point = user['point'] - Sum
+        )
+
+        user.save()
+
+        owner = User_Model.objects(
+            id = Market_Model.objects(market_id = market_id).first()['owner_id']).first()
+
+        owner.update(
+            point = owner['point'] + Sum
+        )
 
         Orderlist_Model(
             order_uuid = uuid,
@@ -65,7 +87,7 @@ class RegisterMarket(Resource):
             order = reserve_list
         ).save()
 
-        return "", 201
+        return "", 200
 
     @jwt_required
     def delete(self):

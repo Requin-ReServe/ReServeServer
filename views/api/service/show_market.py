@@ -25,7 +25,7 @@ class RegisterMarket(Resource):
             "market_id":uuid,
             "market_name":finder['name'],
             "menu":finder['menu']
-               }, 201
+               }, 200
 
     @jwt_required
     def post(self, market_uuid):
@@ -64,9 +64,15 @@ class RegisterMarket(Resource):
 
         menu_name = request.json['menu_name']
 
-        for i in finder.menu:
-            if i['menu_name'] == menu_name:
-                i.delete()
+        menu_list = list()
+
+        for i in finder['menu']:
+            if not i['menu_name'] == menu_name:
+                menu_list.append(i)
+
+        finder.update(
+            menu=menu_list
+        )
 
         finder.save()
 
