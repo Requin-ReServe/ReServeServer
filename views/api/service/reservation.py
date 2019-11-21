@@ -1,4 +1,5 @@
 import random
+import time
 
 from flask import Blueprint, request, abort
 from flask_restful import Api, Resource
@@ -25,6 +26,7 @@ class RegisterMarket(Resource):
             res.append(
                 {
                     "order_id":order['order_uuid'],
+                    "order_time":order['order_time'],
                     "market_name": Market_Model.objects(market_id = order['market_id']).first()['name'],
                     "main_menu":order['order'][0]['name']
                 })
@@ -37,6 +39,7 @@ class RegisterMarket(Resource):
     def post(self):
         market_id = request.json['market_id']
         reserve_list = request.json['menu']
+        order_time = request.json['time']
         finder = Market_Model.objects(market_id = market_id).first()
 
 
@@ -84,7 +87,8 @@ class RegisterMarket(Resource):
             order_uuid = uuid,
             market_id = market_id,
             customer_id = get_jwt_identity(),
-            order = reserve_list
+            order = reserve_list,
+            order_time = order_time
         ).save()
 
         return "", 200
@@ -94,6 +98,9 @@ class RegisterMarket(Resource):
         order_id = request.json['order_id']
 
         finder = Orderlist_Model.objects(order_uuid = order_id).first()
+
+        if finder['order_time'] - 1800 < time.time():
+            abort(406)
 
         if finder is None:
             abort(409)

@@ -33,6 +33,7 @@ class RegisterMarket(Resource):
                     })
             res.append(
                 {
+                    "order_time":order['order_time'],
                     "customer": order['customer_id'],
                     "menu_list": menu_list
                 })

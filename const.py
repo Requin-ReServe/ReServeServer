@@ -6,7 +6,7 @@
 
 _RUN_SETTING = {
     'host':'0.0.0.0',
-    'port':80,
+    'port':5555,
 #     'ssl_context':ssl_context
 }
 

@@ -33,5 +33,6 @@ class RegisterMarket(Resource):
 
         return {
             "market_name": market_name['name'],
+            "order_time": order_list['order_time'],
             "menu_list": res
             }, 200

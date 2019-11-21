@@ -11,6 +11,8 @@ class Order_Model(EmbeddedDocument):
 class Orderlist_Model(Document):
     order_uuid = IntField(primary_key=True)
 
+    order_time = IntField()
+
     market_id = IntField()
 
     customer_id = StringField()
