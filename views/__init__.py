@@ -36,3 +36,6 @@ def Route(app : Flask):
     app.register_blueprint(reservation_detail.api.blueprint)
     app.register_blueprint(owner_show_reservation_list.api.blueprint)
     app.register_blueprint(payment.api.blueprint)
+
+    from views.api.util import band_check_band_check
+    app.register_blueprint(band_check_band_check.api.blueprint)
