@@ -6,10 +6,10 @@ from models.user.user_model import User_Model
 
 
 api = Api(Blueprint(__name__,__name__))
-api.prefix = '/auth'
+api.prefix = '/user'
 
 
-@api.resource('/login')
+@api.resource('/auth')
 class Login(Resource):
     def post(self):
         login_id = request.json['id']

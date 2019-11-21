@@ -5,7 +5,7 @@ from models.user.user_model import User_Model
 
 
 api = Api(Blueprint(__name__,__name__))
-api.prefix = '/auth'
+api.prefix = '/user'
 
 
 @api.resource('/register')
@@ -14,8 +14,9 @@ class Register(Resource):
         register_id = request.json['id']
         register_name = request.json['name']
         register_pw = request.json['pw']
+        register_phone_num = request.json['phone_num']
         user_type = request.json['type']
-        basic_point = request.json['point']
+        basic_point = 0
 
 
         finder = User_Model.objects(id=register_id).first()
@@ -30,6 +31,7 @@ class Register(Resource):
             pw = register_pw,
             name = register_name,
             point = basic_point,
+            phone_num = register_phone_num,
             user_type = user_type
         ).save()
 

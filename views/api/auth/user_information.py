@@ -6,10 +6,10 @@ from models.user.user_model import User_Model
 
 
 api = Api(Blueprint(__name__,__name__))
-api.prefix = '/auth'
+api.prefix = '/user'
 
 
-@api.resource('/user-information')
+@api.resource('/info')
 class UserInformation(Resource):
     @jwt_required
     def get(self):
@@ -20,20 +20,32 @@ class UserInformation(Resource):
             "name": user['name'],
             "id": user['id'],
             "point": user['point'],
-            "user_type": user['user_type']
+            "phone_num": user['phone_num']
         }, 200
 
     @jwt_required
-    def post(self):
+    def put(self):
         change_name = request.json['name']
         change_pw = request.json['pw']
         finder = User_Model.objects(id=get_jwt_identity()).first()
 
-        finder.update(
-            name=change_name,
-            pw = change_pw
-        )
+        if change_name == None and change_pw == None:
+            abort(409)
 
+        elif change_name == None:
+            finder.update(
+                pw=change_pw
+            )
+
+        elif change_pw == None:
+            finder.update(
+                name=change_name,
+            )
+        else:
+            finder.update(
+                name=change_name,
+                pw=change_pw
+            )
 
         return '', 201
 

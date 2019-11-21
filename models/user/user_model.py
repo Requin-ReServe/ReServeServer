@@ -12,3 +12,5 @@ class User_Model(Document):
     point = IntField()
 
     user_type = IntField()
+
+    phone_num = StringField()
