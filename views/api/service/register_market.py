@@ -19,6 +19,7 @@ class RegisterMarket(Resource):
         register_name = request.json['name']
         register_loc = request.json['location']
         register_num = request.json['tel_num']
+        register_image = request.json['image']
         owner_id = get_jwt_identity()
 
         if User_Model.objects(id = get_jwt_identity()).first()['user_type'] == 0:
@@ -46,6 +47,7 @@ class RegisterMarket(Resource):
             location = register_loc,
             telephone_num = register_num,
             market_id = uuid,
+            image = register_image,
             menu = []
         ).save()
 

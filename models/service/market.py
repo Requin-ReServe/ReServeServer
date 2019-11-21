@@ -21,6 +21,8 @@ class Market_Model(Document):
 
     market_id = IntField(primary_key=True)
 
+    image = StringField()
+
     menu = ListField(
         list = EmbeddedDocumentField(BoardModel)
     )

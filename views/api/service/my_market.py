@@ -30,6 +30,7 @@ class RegisterMarket(Resource):
         for market in finder:
             res.append({
                         "name": market['name'],
+                        "image": market['image'],
                         "location": market['location'],
                         "tel_num": market['telephone_num'],
                         "market_id": market['market_id']

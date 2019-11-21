@@ -24,6 +24,7 @@ class RegisterMarket(Resource):
         return {
             "market_id":uuid,
             "market_name":finder['name'],
+            "image":finder['image'],
             "menu":finder['menu'],
                }, 200
 
