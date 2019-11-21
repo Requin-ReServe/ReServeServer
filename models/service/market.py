@@ -6,6 +6,8 @@ class BoardModel(EmbeddedDocument):
 
     price = IntField()
 
+    description = StringField
+
 
 class Market_Model(Document):
 

@@ -28,7 +28,7 @@ class RegisterMarket(Resource):
             res.append(
                 {
                     "menu_name":order["name"],
-                    "menu_price":order['price']
+                    "menu_price":order['price'],
                 })
 
         return {

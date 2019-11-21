@@ -24,7 +24,7 @@ class RegisterMarket(Resource):
         return {
             "market_id":uuid,
             "market_name":finder['name'],
-            "menu":finder['menu']
+            "menu":finder['menu'],
                }, 200
 
     @jwt_required
@@ -38,6 +38,7 @@ class RegisterMarket(Resource):
 
         menu_name = request.json['menu_name']
         menu_price = request.json['menu_price']
+        menu_des = request.json['menu_des']
 
         if menu_name == None or menu_price == None:
             abort(409)
@@ -45,7 +46,8 @@ class RegisterMarket(Resource):
         finder.menu.append(
             {
                 'menu_name': menu_name,
-                'menu_price': menu_price
+                'menu_price': menu_price,
+                'menu_des':menu_des
             }
         )
 
