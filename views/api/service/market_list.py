@@ -10,30 +10,32 @@ from models.service.market import Market_Model
 api = Api(Blueprint(__name__,__name__))
 api.prefix = '/service'
 
-@api.resource('/market-list')
+@api.resource('/markets')
 class MarketList(Resource):
     def get(self):
         markets = Market_Model.objects().all()
 
-        market_list = {}
+        market_list = []
 
         a = 0
         for market in markets:
-            market_list[a] = {
-                "name":market['name'],
-                "location":market['location'],
-                "phone":market['telephone_num']
-            }
-            a += 1
+            market_list.append({
+                "name": market['name'],
+                "location": market['location'],
+                "tel_num": market['telephone_num'],
+                "market_id": market['market_id']
+            })
 
-        return market_list, 201
+        return {
+            "market_list": market_list
+               }, 201
 
 
     def post(self):
         market_name = list(request.json['market'].split())
 
         find = list()
-        market_list = dict()
+        market_list = list()
         name_markets_list = list()
         real_markets_list = list()
         a = 0
@@ -52,14 +54,17 @@ class MarketList(Resource):
             for i in find:
                 name_markets = Market_Model.objects(Q(name=i) | Q(location=i)).all()
                 for market in name_markets:
-                    market_list[a] = {
+                    market_list.append({
                         "name": market['name'],
                         "location": market['location'],
-                        "phone": market['telephone_num']
-                    }
-                    a += 1
+                        "tel_num": market['telephone_num'],
+                        "market_id": market['market_id']
+                    })
 
-            return market_list, 201
+            return {
+            "market_list": market_list
+               }, 201
+
         else:
             for i in find:
                 if not flag:
@@ -90,12 +95,13 @@ class MarketList(Resource):
 
             for return_market_list in real_markets_list:
                 for market in return_market_list:
-                    market_list[a] = {
+                    market_list.append({
                         "name": market['name'],
                         "location": market['location'],
-                        "phone": market['telephone_num']
-                    }
+                        "tel_num": market['telephone_num'],
+                        "market_id": market['market_id']
+                    })
 
-                    a += 1
-
-        return market_list, 201
+        return {
+            "market_list": market_list
+               }, 201

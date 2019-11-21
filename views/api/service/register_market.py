@@ -11,22 +11,24 @@ api = Api(Blueprint(__name__,__name__))
 api.prefix = '/service'
 
 
-@api.resource('/register-market')
+@api.resource('/market')
 class RegisterMarket(Resource):
     @jwt_required
     def post(self):
         register_name = request.json['name']
         register_loc = request.json['location']
-        register_num = request.json['phone']
-
+        register_num = request.json['tell_num']
         owner_id = get_jwt_identity()
 
         finder = Market_Model.objects(location=register_loc).first()
 
-
         if finder is not None:
             return abort(409)
 
+        finder = Market_Model.objects(telephone_num = register_loc).first()
+
+        if finder is not None:
+            return abort(409)
 
         while True:
             uuid = random.randrange(11111, 99999)
@@ -39,7 +41,8 @@ class RegisterMarket(Resource):
             name = register_name,
             location = register_loc,
             telephone_num = register_num,
-            market_id = uuid
+            market_id = uuid,
+            menu = []
         ).save()
 
         return '', 201

@@ -3,6 +3,7 @@ from flask_restful import Api, Resource
 from flask_jwt_extended import jwt_required, get_jwt_identity
 
 from models.user.user_model import User_Model
+from models.service.market import Market_Model
 
 
 api = Api(Blueprint(__name__,__name__))
@@ -49,3 +50,14 @@ class UserInformation(Resource):
 
         return '', 201
 
+    @jwt_required
+    def delete(self):
+        finder = User_Model.objects(id=get_jwt_identity()).first()
+        markets = Market_Model.objects(owner_id=get_jwt_identity()).all()
+
+        for market in markets:
+            market.delete()
+
+        finder.delete()
+
+        return '', 200

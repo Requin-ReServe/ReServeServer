@@ -1,5 +1,10 @@
-from mongoengine import StringField, IntField
-from mongoengine import Document
+from mongoengine import StringField, IntField, ListField
+from mongoengine import Document, EmbeddedDocumentField, EmbeddedDocument
+
+class BoardModel(EmbeddedDocument):
+    name = StringField()
+
+    price = IntField()
 
 
 class Market_Model(Document):
@@ -8,11 +13,15 @@ class Market_Model(Document):
 
     name = StringField()
 
-    location = StringField(primary_key=True)
+    location = StringField()
 
     telephone_num = StringField()
 
-    market_id = IntField()
+    market_id = IntField(primary_key=True)
+
+    menu = ListField(
+        list = EmbeddedDocumentField(BoardModel)
+    )
 
     meta = {
             'indexes': [

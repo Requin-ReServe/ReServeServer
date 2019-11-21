@@ -9,9 +9,11 @@ class Order_Model(EmbeddedDocument):
 
 
 class Orderlist_Model(Document):
-    market_num = IntField()
+    order_uuid = IntField(primary_key=True)
 
-    customer_name = StringField()
+    market_id = IntField()
+
+    customer_id = StringField()
 
     order = ListField(
         EmbeddedDocumentField(Order_Model)
