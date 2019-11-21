@@ -39,5 +39,5 @@ class RegisterMarket(Resource):
                 })
 
         return {
-            "menu_list": res
+            "order_list": res
             }, 200
