@@ -22,7 +22,7 @@ class RegisterMarket(Resource):
             return abort(409)
 
         return {
-            "market_id":uuid,
+            "market_id":int(uuid),
             "market_name":finder['name'],
             "image":finder['image'],
             "menu":finder['menu'],
