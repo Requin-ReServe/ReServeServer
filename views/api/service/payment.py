@@ -23,4 +23,6 @@ class RegisterMarket(Resource):
 
         finder.delete()
 
+        finder.save()
+
         return '', 200
